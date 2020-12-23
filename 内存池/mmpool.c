@@ -254,6 +254,10 @@ void *mp_nalloc(struct mp_pool_s *pool, size_t size) {
 		return mp_alloc_block(pool, size);
 	}
 
+	/*
+	* 比如来了个8K，找到空闲给他分配，如果不够再分配，
+	* 回收的时候不做释放，后面再次使用的时候直接拿出来使用。
+	**/
 	return mp_alloc_large(pool, size);
 	
 }
@@ -269,11 +273,17 @@ void *mp_calloc(struct mp_pool_s *pool, size_t size) {
 	
 }
 
+// 仅仅释放了大块内存，小块内存不释放，内存池销毁时同一释放
 void mp_free(struct mp_pool_s *pool, void *p) {
 
 	struct mp_large_s *l;
 	for (l = pool->large; l; l = l->next) {
 		if (p == l->alloc) {
+		/*
+		* 遍历large链表，释放large内存块，
+		* 注意此处并没有释放管理large内存块的内存(即large链表节点)，
+		* 而仅是将其alloc指针设为NULL
+		**/
 			free(l->alloc);
 			l->alloc = NULL;
 
