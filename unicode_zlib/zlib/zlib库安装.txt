@@ -1,0 +1,18 @@
+1.下载源码包 
+下载http://www.zlib.net/，选择zlib-1.2.11.tar.gz
+(1)下载
+wget http://www.zlib.net/zlib-1.2.11.tar.gz
+(2)解压
+tar -zxvf zlib-1.2.11.tar.gz
+(3)进入目录
+cd zlib-1.2.11
+
+2. 编译
+(1)配置
+./configure
+(2)编译
+make
+(3)检查，要全部为yes
+make check
+(4)安装
+sudo make install

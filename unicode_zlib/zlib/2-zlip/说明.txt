@@ -1,0 +1,5 @@
+1. 压缩代码
+g++ -o deflate DeflatingStream.cpp deflate.cpp -lz
+
+2. 解压代码
+g++ -o inflate InflatingStream.cpp inflate.cpp -lz

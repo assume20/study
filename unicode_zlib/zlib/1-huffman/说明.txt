@@ -1,0 +1,3 @@
+使用哈夫曼树压缩和解压文档
+
+g++ -o huffman main.cpp HuffmanTree.hpp FileCompress.hpp 
