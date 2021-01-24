@@ -121,6 +121,7 @@ public:
         int objSize = sizeof(TmpInfo);
         for (size_t i = 0; i < 256; ++i)            // 这里实质是讲码表存储到文件的头部
         {
+            // 将字符、出现的次数存到压缩文件首部
             if (_infos[i]._count > 0) 
             {
                 TmpInfo info;
@@ -150,8 +151,11 @@ public:
         {
             // 读取数据，查找对应编码
             string &code = _infos[(unsigned char)ch]._code; // 查找对应的编码
-            // printf("code[%d]:%u:%s\n", readCount, (unsigned char)ch, code.c_str());
+            printf("code[%d]:%u:%s\n", readCount, (unsigned char)ch, code.c_str());
             // code 实际存储的是对应 某个字符的哈夫曼编码
+            /* 
+             code[10086]:32:1101 例如  补成8bit 1个字节的 00001011 然后写入文件
+            **/
             for (size_t i = 0; i < code.size(); ++i)
             {
                 if (code[i] == '1')
